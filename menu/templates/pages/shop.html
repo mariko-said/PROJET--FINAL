@@ -1,0 +1,90 @@
+{% extends 'bases/base.html' %}
+
+{% load static %}
+
+{% block title %}
+<title> My Menu: Accueil</title>
+{% endblock title %}
+
+
+{% block content %}
+
+
+  <!-- discount section -->
+ 
+
+
+  <!-- end discount section -->
+
+  <!-- health section -->
+
+  <section class="health_section layout_padding">
+    <div class="health_carousel-container">
+      <h2 class="text-uppercase">
+          Medicaments & Vitamines
+
+        <div class="row">
+          
+  {% for produit in produit_object %}
+  <div class="col-md-3">
+    <div class="card">
+      <img src="{{ produit.images.url}}" alt="" class="card-img-top">
+       <div class="card-body">
+         <div class="card-title">{{ produit.titre}}</div>
+         <div style="color: chartreuse" class="card-text"> £ {{ produit.prix}}</div>
+         <a href="{{ produit.id }}" class="btn btn-warning">Voir</a>
+         <button class="btn ted btn-success">Ajouter</button>
+       </div>
+    </div>
+  </div>
+{% endfor %}
+
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-3 offset-md-4">
+            <ul class="pagination">
+              {% if produit_object.has_previous %}
+                <li class="page-item">
+                  <a class="page-link"  href="?page={{ produit_object.previous_page_number }}">Precedent</a>
+                </li> 
+              {% endif %}  
+                 <li class="page-item active">
+                     <a class="page-link" href="? page={{ produit_object.number}}">{{ produit_object.number}}</a>
+                 </li>
+    
+              {% if produit_object.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ produit_object.next_page_number }}">Suivant</a>
+              </li> 
+            {% endif %}  
+            </ul>
+          </div>
+        </div>
+     
+  </section>
+
+  <!-- end health section -->
+
+
+
+ 
+
+
+  <!-- end info section -->
+
+  <!-- footer section -->
+  <section class="container-fluid footer_section">
+    <p>
+      &copy; 2019 All Rights Reserved. Design by
+      <a href="https://html.design/">Free Html Templates</a>
+    </p>
+  </section>
+  {% endblock content %}
+  
+  
+
+
+   
+
+
+  

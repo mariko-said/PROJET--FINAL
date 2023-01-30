@@ -1,0 +1,36 @@
+{% extends 'bases/base.html' %}
+
+{% load static %}
+
+{% block title %}
+<title> My Menu : Détail</title>
+{% endblock title %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-md-6">
+	   <div>
+		   <img src="{{ produit.images.url}}" width="500" height="500px" alt="">
+	   </div>
+ 
+	 </div>
+ 
+ 
+   <div class="col-md6">
+	 <div class="text-warning display-3">
+	   {{ produit.titre }}
+	 </div >
+	 <div class="text-danger ">
+	   {{ produit.prix }}
+	 </div>
+	 <div>
+	   prix: £{{ produit.description }}
+	 </div>
+	 <a href="#"><button class="btn btn-success">Acheter</button></a>
+	</div>
+   </div>
+ 
+ 
+
+{% endblock content %}
