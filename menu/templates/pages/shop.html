@@ -24,20 +24,20 @@
           Medicaments & Vitamines
 
         <div class="row">
-          
-  {% for produit in produit_object %}
-  <div class="col-md-3">
-    <div class="card">
-      <img src="{{ produit.images.url}}" alt="" class="card-img-top">
-       <div class="card-body">
-         <div class="card-title">{{ produit.titre}}</div>
-         <div style="color: chartreuse" class="card-text"> £ {{ produit.prix}}</div>
-         <a href="{{ produit.id }}" class="btn btn-warning">Voir</a>
-         <button class="btn ted btn-success">Ajouter</button>
-       </div>
-    </div>
-  </div>
-{% endfor %}
+
+          {% for produit in produit_object %}
+          <div class="col-md-3">
+            <div class="card">
+              <img src="{{ produit.image }}" alt="" class="card-img-top">
+               <div class="card-body">
+                 <div class="card-title">{{ produit.titre}}</div>
+                 <div style="color: chartreuse" class="card-text"> £ {{ produit.prix}}</div>
+                 <a href="{{produit.id }}" class="btn btn-warning">Voir</a>
+                 <button  class="btn ted btn-success">Ajouter</button>
+               </div>
+            </div>
+          </div>
+        {% endfor %}
 
         </div>
         <div class="row mt-3">
@@ -80,7 +80,6 @@
     </p>
   </section>
   {% endblock content %}
-  
   
 
 

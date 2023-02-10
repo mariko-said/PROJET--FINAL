@@ -11,14 +11,26 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from . tokens import generateToken
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from rest_framework import permissions
-from .serializers import UserSerializer, GroupSerializer
+
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.contrib import messages #import messages
+
 # Create your views here.
 
 
 def home(request, *args, **kwargs):
     return render(request, 'pages/index.html')
+
+  
 
 
 def signup(request):
@@ -109,7 +121,7 @@ def signin(request):
 def signout(request):
     logout(request)
     messages.success(request, 'logout successfully!')
-    return redirect('authentification/signup')
+    return redirect('menu:index')
        
 
 def activate(request, uidb64, token):
@@ -128,20 +140,39 @@ def activate(request, uidb64, token):
         messages.success(request, 'Activation failed please try again')
         return redirect('home')
 
+def password_reset_request(request):
+	if request.method == "POST":
+		password_reset_form = PasswordResetForm(request.POST)
+		if password_reset_form.is_valid():
+			data = password_reset_form.cleaned_data['email']
+			associated_users = User.objects.filter(Q(email=data))
+			if associated_users.exists():
+				for user in associated_users:
+					subject = "Password Reset Requested"
+					email_template_name = "motpasse/password_reset_email.txt"
+					c = {
+					"email":user.email,
+					'domain':'your-website-name.com',
+					'site_name': 'Website Name',
+					"uid": urlsafe_base64_encode(force_bytes(user.pk)),
+					'token': default_token_generator.make_token(user),
+					'protocol': 'https',
+					}
+					email = render_to_string(email_template_name, c)
+					try:
+						send_mail(subject, email, 'AWS_verified_email_address', [user.email], fail_silently=False)
+					except BadHeaderError:
 
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+						return HttpResponse('Invalid header found.')
+						
+					messages.success(request, 'A message with reset password instructions has been sent to your inbox.')
+					return redirect ("password_reset_done")
+			messages.error(request, 'An invalid email has been entered.')
+	password_reset_form = PasswordResetForm()
+	return render(request=request, template_name="motpasse/password_reset.html", context={"password_reset_form":password_reset_form})
 
 
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
-    permission_classes = [permissions.IsAuthenticated]        
+
+
+
+       

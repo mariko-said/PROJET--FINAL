@@ -10,27 +10,34 @@
 
 <div class="row">
 	<div class="col-md-6">
-	   <div>
-		   <img src="{{ produit.images.url}}" width="500" height="500px" alt="">
-	   </div>
- 
-	 </div>
- 
- 
-   <div class="col-md6">
-	 <div class="text-warning display-3">
-	   {{ produit.titre }}
-	 </div >
-	 <div class="text-danger ">
-	   {{ produit.prix }}
-	 </div>
-	 <div>
-	   prix: £{{ produit.description }}
-	 </div>
-	 <a href="#"><button class="btn btn-success">Acheter</button></a>
-	</div>
-   </div>
- 
- 
+		<div>
+			<img src="{{ produit.image }}" width="500px"  height="500px" alt="">
 
+		</div>
+	</div>
+	
+	<div class="col-md6">
+		<div class="text-warning display-3">
+		  {{ produit.titre }}
+		</div >
+		<div class="text-danger ">
+			{{ produit.description }}
+		</div>
+		<div>
+		  prix: £{{ produit.prix }}
+		</div>
+		<a href="#"><button class="btn btn-success">Acheter</button></a>
+		<h1>{{ produit.nom }}</h1>
+        <p>Likes: {{ likes }}</p>
+        <p>Dislikes: {{ dislikes }}</p>
+        <a href="{% url 'menu:like' produit.id %}">Like</a>
+        <a href="{% url 'menu:dislike' produit.id %}">Dislike</a>
+
+	</div>
+</div>
+<a href="{% url 'menu:add_comment' %}">Ajouter Commentaire</a>
+	{% for comment in comments %}
+	  {{ comment.text }}
+	{% endfor %}
+	
 {% endblock content %}

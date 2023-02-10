@@ -77,10 +77,7 @@
             <div class="d-flex  flex-column flex-lg-row align-items-center w-100 justify-content-between">
               <ul class="navbar-nav  ">
               {% if request.user.is_authenticated %}
-                <p>Bonjour, {{ user.username }}</p>
-                {% else %}
-                <p>Vous n'êtes pas connecté.</p>
-                {% endif %}  
+                <p style="color: azure;">Bonjour, {{ user.username }}</p>
                 <li class="nav-item active">
                   <a class="nav-link" href="{% url 'menu:index' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
@@ -93,23 +90,46 @@
                 </li>
                 
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'menu:buy' %}"> Online Buy </a>
-                </li>
+               
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'menu:news' %}"> News </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'menu:contact' %}">Contact </a>
                 </li>
+               
+                
+             
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'authentification:signout' %}"> signout </a>
+          </li>
+         
+              </ul>
+              <ul class="navbar-nav  ">
+                {% else %}
+                <p style="color: azure;">Vous n'êtes pas connecté.</p>
+                 
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'menu:index' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'menu:blog' %}"> Blog </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'menu:shop' %}"> Shop </a>
+                </li>
+                
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'authentification:signin' %}"> Signin </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'authentification:signup' %}"> Signup </a>
             </li>
-           
-              </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'authentification:password_reset' %}"> password_reset </a>
+          </li>
+              
+                {% endif %} 
               <form class="form-inline ">
                 <input type="search" placeholder="Search">
                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
@@ -171,7 +191,6 @@
               Menu
             </h4>
             <ul class="navbar-nav  ">
-              
               <li class="nav-item active">
                 <a class="nav-link" href="{% url 'menu:index' %}">Home <span class="sr-only">(current)</span></a>
               </li>
@@ -181,10 +200,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'menu:shop' %}"> Shop </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'menu:buy' %}"> Online Buy </a>
-              </li>
-            
+             
             </ul>
           </div>
         </div>
@@ -264,7 +280,6 @@
     
    {% endblock scripts %}
 </body>
- 
 </html>
 
 

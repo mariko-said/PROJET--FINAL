@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 from .info import *
 import django
@@ -24,6 +24,7 @@ EMAIL_PORT = EMAIL_PORT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATES_DIRS= os.path.join(BASE_DIR,'templtes')
 
 
 # Quick-start development settings - unsuitable for production
@@ -50,11 +51,13 @@ INSTALLED_APPS = [
     'menu.apps.MenuConfig',
     'authentification.apps.AuthentificationConfig',
     'six',
-    
-    
-    'django_graphiql',  
-    'graphene_django',
+    'crispy_forms',
     'rest_framework',
+    'graphene_django',
+    
+    
+      
+   
    
    
     
@@ -73,6 +76,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'projet.urls'
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 
 TEMPLATES = [
@@ -107,13 +117,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-GRAPHENE = {
-          'SCHEMA': 'users.schema.schema',
-    }
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
-}
+
 
 
 # Password validation
@@ -149,10 +153,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-#STATICFILES_DIRS = [
- #   os.path.join(BASE_DIR, 'static'),
- #   os.path.join(BASE_DIR, 'media')
-#]
+STATICFILES_DIRS = [
+   BASE_DIR/ "static"
+]
+ 
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
@@ -166,7 +170,7 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 
 #DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #DEFAULT_FROM_EMAIL = "saidmariko01@.com"
-#EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 
 
